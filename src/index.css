@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-*: initial;
+  --font-sans: Roboto Mono, monospace;
+
+  --text-huge: 80rem;
+  --text-huge--line-height: 1;
+
+  --height-screen: 100dvh;
+
+  /* ... */
+}
+
+
+/* Adicionar configuração global da fonte */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+
+
+@utility input {
+  @apply rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:outline-hidden focus:ring-3 focus:ring-yellow-400 md:px-6 md:py-3;
+}
+
+@utility loader {
+  /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
+  width: 45px;
+  aspect-ratio: 0.75;
+  --c: no-repeat linear-gradient(var(--color-stone-800) 0 0);
+  background:
+    var(--c) 0% 50%,
+    var(--c) 50% 50%,
+    var(--c) 100% 50%;
+  background-size: 20% 50%;
+  animation: loading 1s infinite linear;
+}
+
+
+@layer components {
+
+  @keyframes loading {
+    20% {
+      background-position:
+        0% 0%,
+        50% 50%,
+        100% 50%;
+    }
+    40% {
+      background-position:
+        0% 100%,
+        50% 0%,
+        100% 50%;
+    }
+    60% {
+      background-position:
+        0% 50%,
+        50% 100%,
+        100% 0%;
+    }
+    80% {
+      background-position:
+        0% 50%,
+        50% 50%,
+        100% 100%;
+    }
+  }
+
+
+  /* <button class="bg-[var(--color-medium)] text-[var(--color-darkest)] px-[1.2rem] py-[0.8rem] border-none rounded-[7px] font-bold cursor-pointer transition duration-300 hover:bg-[var(--color-dark)]">Botão</button> */
+
+  .btn-default {
+    background-color: var(--color-medium);
+    color: #343a40;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-dark);
+      }
+    }
+  }
+
+ 
+
+  }
+
+}
