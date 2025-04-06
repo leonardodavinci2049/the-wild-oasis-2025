@@ -1,31 +1,38 @@
-import {  useEffect } from "react"
-
-import { getCabins } from "../services/apiCabins"
+import GlobalStyles from "../GlobalStyles";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
+import Bookings from "../pages/Bookings";
+import Cabins from "../pages/Cabins";
+import Settings from "../pages/Settings";
+import Account from "../pages/Account";
+import Login from "../pages/Login";
+import PageNotFound from "../pages/PageNotFound";
+import AppLayout from "../ui/AppLayout";
+import NewUsers from "../pages/Users";
 // Define the Cabin type
-type Cabin = {
-  id: number;
-  name: string;
-  location: string;
-};
 
 function App() {
-
-useEffect(() => {
- getCabins().then((data: Cabin[]) => {
-  console.log(data)
-  return data
-}
-)
-
-  
-}, [])
   return (
+    <>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate replace to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="cabins" element={<Cabins />} />
+            <Route path="users" element={<NewUsers />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="account" element={<Account />} />
+          </Route>
 
-      <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-green-500">
-    <h1 className="text-5xl text-red-500 uppercase font-bold">project The Wind Oasis</h1>
-      </div>
-   
-  )
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
-export default App
+export default App;
