@@ -25,7 +25,17 @@ const StyledCheckbox = styled.div`
   }
 `;
 
-function Checkbox({ checked, onChange, disabled = false, id, children }) {
+import { ChangeEvent } from "react";
+
+type CheckboxProps = {
+  checked: boolean;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  id: string;
+  children: React.ReactNode;
+}
+
+function Checkbox({ checked, onChange, disabled = false, id, children }: CheckboxProps) {
   return (
     <StyledCheckbox>
       <input

@@ -1,27 +1,7 @@
+import React from "react";
 import styled, { css } from "styled-components";
-import PropTypes from "prop-types";
 
-const FormRow = ({ label, error, children, orientation }) => {
-  return (
-    <StyledFormRow orientation={orientation}>
-      {label && <Label htmlFor={children.props.id}>{label}</Label>}
-      {children}
-      {error && <Error>{error}</Error>}
-    </StyledFormRow>
-  );
-};
-
-
-FormRow.propTypes = {
-  label: PropTypes.string,
-  error: PropTypes.string,
-  children: PropTypes.node,
-  orientation: PropTypes.oneOf(["vertical", "horizontal"]),
-};
-
-export default FormRow;
-
-const StyledFormRow = styled.div`
+const StyledFormRow = styled.div<{ orientation?: "vertical" | "horizontal" }>`
   display: grid;
   align-items: center;
 
@@ -66,3 +46,26 @@ const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
 `;
+
+
+type FormRowProps = {
+  label?: string;
+  error?: string;
+  children: React.ReactNode;
+  orientation?: "vertical" | "horizontal";
+}
+
+
+const FormRow = ({ label, error, children, orientation }: FormRowProps) => {
+  return (
+    <StyledFormRow orientation={orientation}>
+      {label && React.isValidElement(children) && "props" in children && <Label htmlFor={children.props.id}>{label}</Label>}
+      {children}
+      {error && <Error>{error}</Error>}
+    </StyledFormRow>
+  );
+};
+
+
+
+export default FormRow;
