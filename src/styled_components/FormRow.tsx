@@ -47,25 +47,24 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-
 type FormRowProps = {
   label?: string;
   error?: string;
   children: React.ReactNode;
   orientation?: "vertical" | "horizontal";
-}
-
+};
 
 const FormRow = ({ label, error, children, orientation }: FormRowProps) => {
   return (
     <StyledFormRow orientation={orientation}>
-      {label && React.isValidElement(children) && "props" in children && <Label htmlFor={children.props.id}>{label}</Label>}
+      {label && React.isValidElement(children) && "props" in children && (
+        <Label htmlFor={children.props.id}>{label}</Label>
+      )}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>
   );
 };
 
-
-
 export default FormRow;
+

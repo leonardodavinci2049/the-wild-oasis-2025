@@ -30,15 +30,15 @@ const StyledToggle = styled.button`
   }
 `;
 
-const StyledList = styled.ul`
+const StyledList = styled.ul<{ position: { x: number; y: number } | null }>`
   position: fixed;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: ${(props) => props.position?.x || 0}px;
+  top: ${(props) => props.position?.y || 0}px;
 `;
 
 const StyledButton = styled.button`
@@ -66,35 +66,45 @@ const StyledButton = styled.button`
   }
 `;
 
-const MenusContext = createContext();
+const MenusContext = createContext({
+  openId: "",
+  close: () => {},
+  open: (id: string) => {},
+  position: null as { x: number; y: number } | null,
+  setPosition: (position: { x: number; y: number } | null) => {},
+});
 
-function Menus({ children }) {
+function Menus({ children }: { children: React.ReactNode }) {
   const [openId, setOpenId] = useState("");
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
 
   const close = () => setOpenId("");
   const open = setOpenId;
 
   return (
-    <MenusContext.Provider
-      value={{ openId, close, open, position, setPosition }}
-    >
+    <MenusContext.Provider value={{ openId, close, open, position, setPosition }}>
       {children}
     </MenusContext.Provider>
   );
 }
 
-function Toggle({ id }) {
+function Toggle({ id }: { id: string }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
-  function handleClick(e) {
-    const rect = e.target.closest("button").getBoundingClientRect();
-    setPosition({
-      x: window.innerWidth - rect.width - rect.x,
-      y: rect.y + rect.height + 8,
-    });
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    const rect = (e.target as HTMLElement).closest("button")?.getBoundingClientRect();
+    if (rect) {
+      setPosition({
+        x: window.innerWidth - rect.width - rect.x,
+        y: rect.y + rect.height + 8,
+      });
+    }
 
-    openId === "" || openId !== id ? open(id) : close();
+    if (openId === "" || openId !== id) {
+      open(id);
+    } else {
+      close();
+    }
   }
 
   return (
@@ -104,21 +114,21 @@ function Toggle({ id }) {
   );
 }
 
-function List({ id, children }) {
+function List({ id, children }: { id: string; children: React.ReactNode }) {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick(close) as React.RefObject<HTMLUListElement>;
 
   if (openId !== id) return null;
 
   return createPortal(
-    <StyledList position={position} ref={ref}>
+    <StyledList position={position || { x: 0, y: 0 }} ref={ref}>
       {children}
     </StyledList>,
     document.body
   );
 }
 
-function Button({ children, icon, onClick }) {
+function Button({ children, icon, onClick }: { children: React.ReactNode; icon?: React.ReactNode; onClick?: () => void }) {
   const { close } = useContext(MenusContext);
 
   function handleClick() {

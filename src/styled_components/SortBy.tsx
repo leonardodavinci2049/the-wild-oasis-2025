@@ -1,12 +1,16 @@
 import { useSearchParams } from "react-router-dom";
 import Select from "./Select";
-import PropTypes from "prop-types";
 
-function SortBy({ options }) {
+
+interface SortByProps {
+  options: Array<{ label: string; value: string }>;
+}
+
+function SortBy({ options }: SortByProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get("sortBy") || "";
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     searchParams.set("sortBy", e.target.value);
     setSearchParams(searchParams);
   }
@@ -14,15 +18,13 @@ function SortBy({ options }) {
   return (
     <Select
       options={options}
-      type="white"
+      variant="white"
       value={sortBy}
       onChange={handleChange}
     />
   );
 }
 
-SortBy.propTypes = {
-  options: PropTypes.array
-};
+
 
 export default SortBy;
