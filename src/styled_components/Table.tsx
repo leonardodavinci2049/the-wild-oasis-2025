@@ -10,7 +10,7 @@ const StyledTable = styled.div`
   overflow: hidden;
 `;
 
-const CommonRow = styled.div`
+const CommonRow = styled.div<{ columns: string }>`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
   column-gap: 2.4rem;
@@ -60,9 +60,14 @@ const Empty = styled.p`
   margin: 2.4rem;
 `;
 
-const TableContext = createContext();
+const TableContext = createContext<{ columns: string } | undefined>(undefined);
 
-function Table({ columns, children }) {
+interface TableProps {
+  columns: string;
+  children: React.ReactNode;
+}
+
+function Table({ columns, children }: TableProps) {
   return (
     <TableContext.Provider value={{ columns }}>
       <StyledTable role="table">{children}</StyledTable>
@@ -70,8 +75,12 @@ function Table({ columns, children }) {
   );
 }
 
-function Header({ children }) {
-  const { columns } = useContext(TableContext);
+function Header({ children }: { children: React.ReactNode }) {
+  const context = useContext(TableContext);
+  if (!context) {
+    throw new Error("Table.Row must be used within a Table with a valid context.");
+  }
+  const { columns } = context;
   return (
     <StyledHeader role="row" columns={columns} as="header">
       {children}
@@ -79,8 +88,14 @@ function Header({ children }) {
   );
 }
 
-function Row({ children }) {
-  const { columns } = useContext(TableContext);
+function Row({ children }: { children: React.ReactNode }) {
+
+  const context = useContext(TableContext);
+  if (!context) {
+    throw new Error("Table.Row must be used within a Table with a valid context.");
+  }
+  const { columns } = context;
+
   return (
     <StyledRow role="row" columns={columns}>
       {children}
@@ -88,7 +103,7 @@ function Row({ children }) {
   );
 }
 
-function Body({ data, render }) {
+function Body<T>({ data, render }: { data: T[]; render: (item: T) => React.ReactNode }) {
   if (!data.length) return <Empty>No data to show at the moment</Empty>;
 
   return <StyledBody>{data.map(render)}</StyledBody>;

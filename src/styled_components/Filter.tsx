@@ -11,7 +11,11 @@ const StyledFilter = styled.div`
   gap: 0.4rem;
 `;
 
-const FilterButton = styled.button`
+interface FilterButtonProps {
+  active?: boolean;
+}
+
+const FilterButton = styled.button<FilterButtonProps>`
   background-color: var(--color-grey-0);
   border: none;
 
@@ -35,13 +39,21 @@ const FilterButton = styled.button`
   }
 `;
 
-function Filter({ filterField, options }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(filterField) || options.at(0).value;
+interface FilterProps {
+  filterField: string;
+  options: {
+    label: string;
+    value: string;
+  }[];
+}
 
-  function handleClick(value) {
+function Filter({ filterField, options }: FilterProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentFilter = searchParams.get(filterField) || options.at(0)?.value || "";
+
+  function handleClick(value: string) {
     searchParams.set(filterField, value);
-    if (searchParams.get("page")) searchParams.set("page", 1);
+    if (searchParams.get("page")) searchParams.set("page", "1");
 
     setSearchParams(searchParams);
   }
@@ -51,7 +63,7 @@ function Filter({ filterField, options }) {
         <FilterButton
           key={option.value}
           onClick={() => handleClick(option.value)}
-          active={option.value === currentFilter ? "active" : "default"}
+          active={option.value === currentFilter}
           disabled={option.value === currentFilter}
         >
           {option.label}

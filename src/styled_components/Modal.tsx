@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
-import PropsTypes from "prop-types";
+
 import { createPortal } from "react-dom";
-import {
+import React, {
   cloneElement,
   createContext,
   useContext,
@@ -10,9 +10,15 @@ import {
 } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
-const ModalContext = createContext();
+const ModalContext = createContext({
+  openName: "",
+  close: () => {},
+  open: (name: string) => {
+    console.log(`Opening modal with name: ${name}`);
+  },
+});
 
-const Modal = ({ children }) => {
+const Modal = ({ children }: { children: React.ReactNode }) => {
   const [openName, setOpenName] = useState("");
 
   const close = () => setOpenName("");
@@ -25,21 +31,24 @@ const Modal = ({ children }) => {
   );
 };
 
-Modal.propTypes = {
-  children: PropsTypes.node.isRequired,
-};
 
-function Open({ children, opens: opensWindowName }) {
+
+function Open({ children, opens: opensWindowName }: { children: React.ReactNode; opens: string }) {
   const { open } = useContext(ModalContext);
 
-  return cloneElement(children, { onClick: () => open(opensWindowName) });
+  if (!React.isValidElement(children)) {
+    console.error("Open component expects a valid ReactElement as its child.");
+    return null;
+  }
+
+  return cloneElement(children as React.ReactElement<{ onClick: () => void }>, { onClick: () => open(opensWindowName) });
 }
 
 // é interessante usar o createPortal para renderizar o modal fora do componente pai e evitar conflitos de estilos
-function Window({ children, name }) {
+function Window({ children, name }: { children: React.ReactElement<{ onCloseModal: () => void }>; name: string }) {
   const { openName, close } = useContext(ModalContext);
   //const ref = useOutsideClick(close);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick(close) as React.RefObject<HTMLDivElement>;
 
  
   if (name !== openName) return null;
@@ -63,10 +72,7 @@ Modal.Window = Window;
 
 export default Modal;
 
-Window.propTypes = {
-  children: PropsTypes.node.isRequired,
-  name: PropsTypes.string.isRequired,
-};
+
 
 const StyledModal = styled.div`
   position: fixed;

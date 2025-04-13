@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
-import PropsTypes from "prop-types";
+
 import { createPortal } from "react-dom";
 
 
 
 // é interessante usar o createPortal para renderizar o modal fora do componente pai e evitar conflitos de estilos
-const Modal = ({ children, onClose }) => {
+import { ReactNode } from "react";
+
+interface ModalProps {
+  children: ReactNode;
+  onClose: () => void;
+}
+
+const Modal = ({ children, onClose }: ModalProps) => {
   return createPortal (
     <Overlay>
       <StyledModal>
@@ -21,10 +28,7 @@ const Modal = ({ children, onClose }) => {
   );
 };
 
-Modal.propTypes = {
-  children: PropsTypes.node.isRequired,
-  onClose: PropsTypes.func,
-};
+
 
 export default Modal;
 
