@@ -3,6 +3,21 @@ import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
+function AppLayout() {
+  return (
+    <StyledAppLayout>
+      <Header />
+      <Sidebar />
+      <Main>
+        <Container>
+          <Outlet />
+        </Container>
+      </Main>
+    </StyledAppLayout>
+  );
+}
+
+export default AppLayout;
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -14,18 +29,10 @@ const StyledAppLayout = styled.div`
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
+  overflow: scroll;
 `;
 
-function AppLayout() {
-  return (
-    <StyledAppLayout>
-      <Header />
-      <Sidebar />
-      <Main>
-        <Outlet />
-      </Main>
-    </StyledAppLayout>
-  );
-}
-
-export default AppLayout;
+const Container = styled.div`
+  max-width: 100rem;
+  margin: 0 auto;
+`;
