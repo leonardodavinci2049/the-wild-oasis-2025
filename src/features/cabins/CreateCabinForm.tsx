@@ -10,49 +10,73 @@ import Button from "../../styled_components/Button";
 import { useCreateCabin } from "./hooks/useCreateCabin";
 import { useEditCabin } from "./hooks/useEditCabin";
 import { CabinType } from "../../types/CabinsType";
+import toast from "react-hot-toast";
+import { CabinFormData } from "../../types/CabinFornData";
 
+// Interface para os dados do formulário
 
-
-function CreateCabinForm({ cabinToEdit = {} as CabinType }) {
+function CreateCabinForm({
+  cabinToEdit,
+  onCloseModal,
+}: {
+  cabinToEdit: CabinType | null;
+  onCloseModal?: () => void;
+}) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isEditing, editCabin } = useEditCabin();
   const isWorking = isCreating || isEditing;
 
-  const { id: editId, ...editValues } = cabinToEdit;
+  const { id: editId, ...editValues } = cabinToEdit || {};
   const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: isEditSession ? editValues : {},
-  });
+  const { register, handleSubmit, reset, getValues, formState } =
+    useForm<CabinFormData>({
+      defaultValues: isEditSession
+        ? (editValues as CabinFormData)
+        : ({} as CabinFormData),
+    });
   const { errors } = formState;
 
-  function onSubmit(data: Omit<CabinType, "id">) {
- //   const image = typeof data.image === "string" ? data.image : data.image?.[0] ?? null;
+  function onSubmit(data: CabinFormData) {
+    // Verifica se há um arquivo de imagem selecionado
+
+    const image = typeof data.image === "string" ? data.image : data.image[0];
+
+    console.log("data: ", data);
 
     if (isEditSession) {
       editCabin(
-        { newCabinData: { ...data, image, id: editId }, id: editId },
+        { newCabinData: { ...data, image }, id: editId },
         {
           onSuccess: () => {
             reset();
+            onCloseModal?.();
           },
         }
       );
     } else {
+      console.log("data111", data);
       createCabin(
-        data,
+        { ...data, image: image },
         {
           onSuccess: () => {
             reset();
+            onCloseModal?.();
           },
         }
       );
     }
   }
 
+  function onError(): void {
+    toast.error(`Error => ${"Verifique Campos requeridos"}`);
+  }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -128,8 +152,7 @@ function CreateCabinForm({ cabinToEdit = {} as CabinType }) {
           id="image"
           accept="image/*"
           {...register("image", {
-            required: false,
-           // required: isEditSession ? false : "This field is required",
+            required: isEditSession ? false : "This field is required",
           })}
         />
       </FormRow>

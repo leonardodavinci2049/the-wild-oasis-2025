@@ -6,5 +6,5 @@ export interface CabinType {
   regularPrice: number;
   discount: number;
   description?: string;
-  image?: string;
+  image?: string | null;
 }
