@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 import Form from "../../styled_components/Form";
 import FormRow from "../../styled_components/FormRow";
@@ -9,8 +10,8 @@ import Button from "../../styled_components/Button";
 
 import { useCreateCabin } from "./hooks/useCreateCabin";
 import { useEditCabin } from "./hooks/useEditCabin";
+
 import { CabinType } from "../../types/CabinsType";
-import toast from "react-hot-toast";
 import { CabinFormData } from "../../types/CabinFornData";
 
 // Interface para os dados do formulário
@@ -40,13 +41,28 @@ function CreateCabinForm({
   function onSubmit(data: CabinFormData) {
     // Verifica se há um arquivo de imagem selecionado
 
-    const image = typeof data.image === "string" ? data.image : data.image[0];
+    let image: string | File | null = null;
+
+    if (typeof data.image === "string") {
+      image = data.image;
+      console.log("Imagem é  uma string");
+    } else if (data.image instanceof FileList && data.image.length > 0) {
+      image = data.image[0];
+      console.log("Imagem é  uma FileList");
+    } else if (data.image instanceof File) {
+      image = data.image;
+      console.log("Imagem é uma File");
+    } else {
+      // Lida com o caso de data.image ser null/undefined ou outro tipo inesperado
+      console.warn("Imagem não fornecida ou em formato inesperado");
+    }
+    
 
     console.log("data: ", data);
 
     if (isEditSession) {
       editCabin(
-        { newCabinData: { ...data, image }, id: editId },
+        { editCabinData: { ...data, image }, id: editId },
         {
           onSuccess: () => {
             reset();
@@ -55,7 +71,7 @@ function CreateCabinForm({
         }
       );
     } else {
-      console.log("data111", data);
+     // console.log("data111", data);
       createCabin(
         { ...data, image: image },
         {

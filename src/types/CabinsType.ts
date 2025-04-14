@@ -5,6 +5,6 @@ export interface CabinType {
   maxCapacity: number;
   regularPrice: number;
   discount: number;
-  description?: string;
+  description?: string | null | undefined
   image?: string | null;
 }

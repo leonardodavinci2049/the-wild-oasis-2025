@@ -75,8 +75,7 @@ function CabinRow({ cabin }: { cabin: CabinType }) {
       regularPrice,
       discount,
       image,
-      description,
-      id: null,
+      description
     });
   }
 

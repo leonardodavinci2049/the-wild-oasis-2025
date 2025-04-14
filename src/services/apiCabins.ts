@@ -17,16 +17,18 @@ export async function createEditCabin(
   newCabin: CabinFormData,
   id: number | null
 ) {
- console.log("newCabin - xxxx", newCabin);
+// console.log("newCabin - xxxx", newCabin);
   const hasImagePath =
     typeof newCabin.image === "string" &&
     newCabin.image.startsWith(supabaseUrl);
 
-/*   const imageName = `${Date.now()}-${Math.floor(Math.random() * 10000)}-${
-    newCabin.image instanceof FileList ? newCabin.image[0].name : ""
-  }`.replaceAll("/", ""); */
-
-  const imageName = newCabin.image instanceof FileList ? newCabin.image[0].name : "xxx"
+    const imageName = `${Date.now()}-${Math.floor(Math.random() * 10000)}-${
+      newCabin.image instanceof FileList 
+        ? newCabin.image[0].name 
+        : newCabin.image instanceof File 
+          ? newCabin.image.name 
+          : ""
+    }`.replaceAll("/", "");
 
 
   console.log("imageName", imageName);
@@ -41,6 +43,7 @@ export async function createEditCabin(
 
   // A) CREATE
   if (!id) {
+   // console.log("CREATE: ", newCabin);
     const result = await supabase
       .from("cabins")
       .insert([{ ...newCabin, image: imagePath }])
