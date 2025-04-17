@@ -56,7 +56,6 @@ function CreateCabinForm({
       // Lida com o caso de data.image ser null/undefined ou outro tipo inesperado
       console.warn("Imagem não fornecida ou em formato inesperado");
     }
-    
 
     console.log("data: ", data);
 
@@ -71,7 +70,7 @@ function CreateCabinForm({
         }
       );
     } else {
-     // console.log("data111", data);
+      // console.log("data111", data);
       createCabin(
         { ...data, image: image },
         {
@@ -175,7 +174,11 @@ function CreateCabinForm({
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
