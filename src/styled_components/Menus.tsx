@@ -71,7 +71,9 @@ const MenusContext = createContext({
   close: () => {},
   open: (id: string) => {},
   position: null as { x: number; y: number } | null,
-  setPosition: (position: { x: number; y: number } | null) => {},
+  setPosition: (position: { x: number; y: number } | null) => {
+    console.log("Position set to:", position);
+  },
 });
 
 function Menus({ children }: { children: React.ReactNode }) {
@@ -79,7 +81,7 @@ function Menus({ children }: { children: React.ReactNode }) {
   const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
 
   const close = () => setOpenId("");
-  const open = setOpenId;
+  const open = (id: string) => setOpenId(id);
 
   return (
     <MenusContext.Provider value={{ openId, close, open, position, setPosition }}>

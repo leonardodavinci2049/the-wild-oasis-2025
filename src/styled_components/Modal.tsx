@@ -56,6 +56,7 @@ function Window({ children, name }: { children: React.ReactElement<{ onCloseModa
   return createPortal(
     <Overlay>
       <StyledModal ref={ref}>
+        <h1 className="text-3xl  text-center font-bold m-4 pt-4">Add New Cabin</h1>
         <Button onClick={close}>
           <HiXMark />
         </Button>
