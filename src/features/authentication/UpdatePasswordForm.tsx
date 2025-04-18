@@ -1,15 +1,16 @@
-import { useForm } from 'react-hook-form';
-import Button from 'ui/Button';
-import Form from 'ui/Form';
-import FormRow from 'ui/FormRow';
-import Input from 'ui/Input';
-import { useUpdateUser } from './useUpdateUser';
+import { useForm } from "react-hook-form";
+import { useUpdateUser } from "./hooks/useUpdateUser";
+
+import Form from "../../styled_components/Form";
+import FormRow from "../../styled_components/FormRow";
+import Input from "../../styled_components/Input";
+import Button from "../../styled_components/Button";
 
 function UpdatePasswordForm() {
-  const { register, handleSubmit, formState, getValues, reset } = useForm();
+  const { register, handleSubmit, formState, getValues, reset } =    useForm();
   const { errors } = formState;
 
-  const { mutate: updateUser, isLoading: isUpdating } = useUpdateUser();
+  const { mutate: updateUser, isUpdating: isUpdating } = useUpdateUser();
 
   function onSubmit({ password }) {
     updateUser({ password }, { onSuccess: () => reset() });
@@ -23,43 +24,51 @@ function UpdatePasswordForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
-        label='Password (min 8 characters)'
-        error={errors?.password?.message}
+        label="Password (min 8 characters)"
+        error={
+          typeof errors?.password?.message === "string"
+            ? errors.password.message
+            : undefined
+        }
       >
         <Input
-          type='password'
-          id='password'
+          type="password"
+          id="password"
           // this makes the form better for password managers
-          autoComplete='current-password'
+          autoComplete="current-password"
           disabled={isUpdating}
-          {...register('password', {
-            required: 'This field is required',
+          {...register("password", {
+            required: "This field is required",
             minLength: {
               value: 8,
-              message: 'Password needs a minimum of 8 characters',
+              message: "Password needs a minimum of 8 characters",
             },
           })}
         />
       </FormRow>
 
       <FormRow
-        label='Confirm password'
-        error={errors?.passwordConfirm?.message}
+        label="Confirm password"
+        error={
+          typeof errors?.passwordConfirm?.message === "string"
+            ? errors.passwordConfirm.message
+            : undefined
+        }
       >
         <Input
-          type='password'
-          autoComplete='new-password'
-          id='passwordConfirm'
+          type="password"
+          autoComplete="new-password"
+          id="passwordConfirm"
           disabled={isUpdating}
-          {...register('passwordConfirm', {
-            required: 'This field is required',
+          {...register("passwordConfirm", {
+            required: "This field is required",
             validate: (value) =>
-              getValues().password === value || 'Passwords need to match',
+              getValues().password === value || "Passwords need to match",
           })}
         />
       </FormRow>
       <FormRow>
-        <Button onClick={handleReset} type='reset' variation='secondary'>
+        <Button onClick={handleReset} type="reset" variation="secondary">
           Cancel
         </Button>
         <Button disabled={isUpdating}>Update password</Button>

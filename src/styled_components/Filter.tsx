@@ -39,17 +39,20 @@ const FilterButton = styled.button<FilterButtonProps>`
   }
 `;
 
+interface FilterOption {
+  value: string;
+  label: string;
+}
+
 interface FilterProps {
   filterField: string;
-  options: {
-    label: string;
-    value: string;
-  }[];
+  options: FilterOption[];
 }
 
 function Filter({ filterField, options }: FilterProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(filterField) || options.at(0)?.value || "";
+  const currentFilter =
+    searchParams.get(filterField) || options.at(0)?.value || "";
 
   function handleClick(value: string) {
     searchParams.set(filterField, value);
@@ -57,6 +60,7 @@ function Filter({ filterField, options }: FilterProps) {
 
     setSearchParams(searchParams);
   }
+
   return (
     <StyledFilter>
       {options.map((option) => (
@@ -74,3 +78,4 @@ function Filter({ filterField, options }: FilterProps) {
 }
 
 export default Filter;
+

@@ -8,17 +8,18 @@ import {
   HiArrowDownOnSquare,
 } from 'react-icons/hi2';
 
-import Tag from 'ui/Tag';
-import Menus from 'ui/Menus';
-import Modal from 'ui/Modal';
-import ConfirmDelete from 'ui/ConfirmDelete';
-import Table from 'ui/Table';
+import Tag from "../../styled_components/Tag";
+import Menus from "../../styled_components/Menus";
+import Modal from "../../styled_components/Modal";
+import ConfirmDelete from "../../styled_components/ConfirmDelete";
+import Table from "../../styled_components/Table";
 
-import { useDeleteBooking } from 'features/bookings/useDeleteBooking';
-import { formatCurrency } from 'utils/helpers';
-import { formatDistanceFromNow } from 'utils/helpers';
-import { useCheckout } from 'features/check-in-out/useCheckout';
-import { format, isToday } from 'date-fns';
+import { formatCurrency } from "../../utils/helpers";
+
+import { useDeleteBooking } from "./hooks/useDeleteBooking";
+import { formatDistanceFromNow } from "../../utils/helpers";
+import { format, isToday } from "date-fns";
+import { useCheckout } from "../check-in-out/useCheckout";
 
 // v1
 // const TableRow = styled.div`
