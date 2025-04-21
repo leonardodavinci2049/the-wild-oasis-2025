@@ -1,10 +1,10 @@
-import Form from "../../styled_components/Form";
-import FormRow from "../../styled_components/FormRow";
-import Input from "../../styled_components/Input";
-import Spinner from "../../styled_components/Spinner";
-import { useSettings } from "./useSettings";
+import Form from "../../components/Form";
+import FormRow from "../../components/FormRow";
+import Input from "../../components/Input";
+import Spinner from "../../components/Spinner";
+import { useSettings } from "./hooks/useSettings";
 
-import { useUpdateSetting } from "./useUpdateSetting";
+import { useUpdateSetting } from "./hooks/useUpdateSetting";
 
 // Defina o tipo SettingsType para corresponder aos campos esperados
 type SettingsType = {
@@ -13,7 +13,6 @@ type SettingsType = {
   maxGuestsPerBooking: number;
   breakfastPrice: number;
 };
-
 
 function UpdateSettingsForm() {
   const {
@@ -38,7 +37,7 @@ function UpdateSettingsForm() {
 
     if (!value) return;
     // Usando um type assertion para informar ao TypeScript que este objeto parcial é válido
-    updateSetting({ [field]: Number(value) } );
+    updateSetting({ [field]: Number(value) });
   }
   return (
     <Form>

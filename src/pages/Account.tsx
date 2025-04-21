@@ -1,6 +1,5 @@
-import Heading from "../styled_components/Heading";
-import Row from "../styled_components/Row";
-
+import Heading from "../components/Heading";
+import Row from "../components/Row";
 
 const Account = () => {
   return (
@@ -18,6 +17,6 @@ const Account = () => {
       </Row>
     </>
   );
-}
+};
 
-export default Account
+export default Account;

@@ -1,9 +1,4 @@
-import CheckoutButton from 'features/check-in-out/CheckoutButton';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import Button from 'ui/Button';
-import { Flag } from 'ui/Flag';
-import Tag from 'ui/Tag';
+import styled from "styled-components";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -27,28 +22,50 @@ const Guest = styled.div`
   font-weight: 500;
 `;
 
-function TodayItem({ stay }) {
+import Tag from "../../components/Tag";
+import { Flag } from "../../components/Flag";
+import CheckoutButton from "../check-in-out/CheckoutButton";
+import { BookingStatus } from "../bookings/BookingRow";
+
+interface StaySimple {
+  id: number;
+  startDate: string;
+  endDate: string;
+  numNights?: number;
+  status: BookingStatus;
+  guests: { fullName: string; countryFlag?: string; country?: string };
+}
+
+function TodayItem({ stay }: { stay: StaySimple }) {
   const { id, status, guests, numNights } = stay;
 
-  const statusToAction = {
+  const statusToAction: {
+    [key in BookingStatus]: {
+      action: string;
+      tag: string;
+      button: React.ReactElement | null;
+    };
+  } = {
     unconfirmed: {
-      action: 'arriving',
-      tag: 'green',
-      button: (
-        <Button
-          variation='primary'
-          size='small'
-          as={Link}
-          to={`/checkin/${id}`}
-        >
-          Check in
-        </Button>
-      ),
+      action: "unconfirmed",
+      tag: "grey",
+      button: <CheckoutButton bookingId={id.toString()} />,
     },
-    'checked-in': {
-      action: 'departing',
-      tag: 'blue',
-      button: <CheckoutButton bookingId={id} />,
+    "checked-in": {
+      action: "checked-in",
+      tag: "grey",
+      button: <CheckoutButton bookingId={id.toString()} />,
+    },
+    confirmed: {
+      action: "confirmed",
+      tag: "grey",
+      button: null,
+    },
+    "checked-out": {
+      // nova propriedade adicionada
+      action: "checked-out",
+      tag: "grey",
+      button: null,
     },
   };
 
@@ -57,7 +74,10 @@ function TodayItem({ stay }) {
       <Tag type={statusToAction[status].tag}>
         {statusToAction[status].action}
       </Tag>
-      <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
+      <Flag
+        src={guests.countryFlag}
+        alt={`Flag of ${guests.country || "unknown"}`}
+      />
       <Guest>{guests.fullName}</Guest>
       <div>{numNights} nights</div>
 

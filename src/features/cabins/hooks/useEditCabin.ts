@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createEditCabin } from "../../../services/apiCabins";
 import { toast } from "react-hot-toast";
-import { CabinFormData } from "../../../types/CabinFornData";
-
+import { CabinFormData } from "../../../types/cabin/CabinFornData";
 
 export function useEditCabin() {
   const queryClient = useQueryClient();
@@ -24,4 +23,3 @@ export function useEditCabin() {
 
   return { isEditing, editCabin };
 }
-

@@ -1,9 +1,8 @@
 import { createContext, useContext, useState } from "react";
-
+import { createPortal } from "react-dom";
+import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { HiEllipsisVertical } from "react-icons/hi2";
-import { createPortal } from "react-dom";
 
 const Menu = styled.div`
   display: flex;
@@ -66,15 +65,17 @@ const StyledButton = styled.button`
   }
 `;
 
-const MenusContext = createContext({
+const initialContextoValue = {
   openId: "",
   close: () => {},
   open: (id: string) => {},
   position: null as { x: number; y: number } | null,
-  setPosition: (position: { x: number; y: number } | null) => {
-    console.log("Position set to:", position);
-  },
-});
+  setPosition: (position: { x: number; y: number }) => {},
+};
+
+
+
+const MenusContext = createContext( initialContextoValue);
 
 function Menus({ children }: { children: React.ReactNode }) {
   const [openId, setOpenId] = useState("");
@@ -84,7 +85,9 @@ function Menus({ children }: { children: React.ReactNode }) {
   const open = (id: string) => setOpenId(id);
 
   return (
-    <MenusContext.Provider value={{ openId, close, open, position, setPosition }}>
+    <MenusContext.Provider
+      value={{ openId, close, open, position, setPosition }}
+    >
       {children}
     </MenusContext.Provider>
   );
@@ -94,6 +97,8 @@ function Toggle({ id }: { id: string }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
+
     const rect = (e.target as HTMLElement).closest("button")?.getBoundingClientRect();
     if (rect) {
       setPosition({
@@ -118,7 +123,7 @@ function Toggle({ id }: { id: string }) {
 
 function List({ id, children }: { id: string; children: React.ReactNode }) {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close) as React.RefObject<HTMLUListElement>;
+  const ref = useOutsideClick(close, false) as React.RefObject<HTMLUListElement>;
 
   if (openId !== id) return null;
 
@@ -130,7 +135,13 @@ function List({ id, children }: { id: string; children: React.ReactNode }) {
   );
 }
 
-function Button({ children, icon, onClick }: { children: React.ReactNode; icon?: React.ReactNode; onClick?: () => void }) {
+type ButtonProps = {
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  onClick?: () => void;
+};
+
+function Button({ children, icon, onClick }: ButtonProps) {
   const { close } = useContext(MenusContext);
 
   function handleClick() {

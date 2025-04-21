@@ -1,27 +1,27 @@
 import styled from "styled-components";
-
-import { useDeleteCabin } from "./hooks/useDeleteCabin";
-import { formatCurrency } from "../../utils/helpers";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
-import { useCreateCabin } from "./hooks/useCreateCabin";
-import { CabinType } from "../../types/CabinsType";
-import CreateCabinForm from "./CreateCabinForm";
-import Modal from "../../styled_components/Modal";
-import ConfirmDelete from "../../styled_components/ConfirmDelete";
-import Table from "../../styled_components/Table";
-import Menus from "../../styled_components/Menus";
-/* 
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`; */
+import CreateCabinForm from "./CreateCabinForm";
+import { formatCurrency } from "../../utils/helpers";
+import { useDeleteCabin } from "./hooks/useDeleteCabin";
+import { useCreateCabin } from "./hooks/useCreateCabin";
+import Table from "../../components/Table";
+import Modal from "../../components/Modal";
+import Menus from "../../components/Menus";
+import ConfirmDelete from "../../components/ConfirmDelete";
+import { CabinType } from "../../types/cabin/CabinsType";
+
+// const TableRow = styled.div`
+//   display: grid;
+//   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+//   column-gap: 2.4rem;
+//   align-items: center;
+//   padding: 1.4rem 2.4rem;
+
+//   &:not(:last-child) {
+//     border-bottom: 1px solid var(--color-grey-100);
+//   }
+// `;
 
 const Img = styled.img`
   display: block;
@@ -50,25 +50,21 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
+
+
 function CabinRow({ cabin }: { cabin: CabinType }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  const { createCabin } = useCreateCabin();
-
-  if (!cabin) return null;
+  const { isCreating, createCabin } = useCreateCabin();
 
   const {
     id: cabinId,
-    name: name,
+    name,
     maxCapacity,
     regularPrice,
     discount,
     image,
     description,
   } = cabin;
-
-  if (cabinId === null) {
-    return null;
-  }
 
   function handleDuplicate() {
     createCabin({
@@ -83,7 +79,7 @@ function CabinRow({ cabin }: { cabin: CabinType }) {
 
   return (
     <Table.Row>
-      <Img src={image || "/default-image.jpg"} />
+      <Img src={image ?? "/path/to/default-image.jpg"} />
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity} guests</div>
       <Price>{formatCurrency(regularPrice)}</Price>
@@ -95,10 +91,13 @@ function CabinRow({ cabin }: { cabin: CabinType }) {
       <div>
         <Modal>
           <Menus.Menu>
-            <Menus.Toggle id={cabinId ? String(cabinId) : ""} />
+            <Menus.Toggle id={cabinId ? String(cabinId) : "default-id"} />
 
-            <Menus.List id={cabinId ? String(cabinId) : ""}>
-              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+            <Menus.List id={String(cabinId ?? "default-id")}>
+              <Menus.Button
+                icon={<HiSquare2Stack />}
+                onClick={!isCreating ? handleDuplicate : undefined}
+              >
                 Duplicate
               </Menus.Button>
 
@@ -119,7 +118,7 @@ function CabinRow({ cabin }: { cabin: CabinType }) {
               <ConfirmDelete
                 resourceName="cabins"
                 disabled={isDeleting}
-                onConfirm={() => cabinId !== undefined && deleteCabin(cabinId)}
+                onConfirm={() => cabinId != null && deleteCabin(cabinId)}
                 onCloseModal={() => console.log("Modal closed for delete")}
               />
             </Modal.Window>

@@ -53,18 +53,26 @@ interface ButtonProps {
   variation?: keyof typeof variations;
 }
 
-const Button = styled.button<ButtonProps>`
+// Usar props transitórias ($variation, $size) para evitar repasse ao DOM
+const Button = styled.button<{
+  $size?: keyof typeof sizes;
+  $variation?: keyof typeof variations;
+}>`
   border: none;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
 
-  ${(props) => sizes[props.size || "medium"]}
-  ${(props) => variations[props.variation || "primary"]}
+  ${(props) => sizes[props.$size || "medium"]}
+  ${(props) => variations[props.$variation || "primary"]}
 `;
 
-Button.defaultProps = {
-  variation: "primary",
-  size: "medium",
-};
+// Wrapper para mapear props públicas para transitórias
+const ButtonWrapper: React.FC<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  size = "medium",
+  variation = "primary",
+  ...rest
+}) => (
+  <Button $size={size} $variation={variation} {...rest} />
+);
 
-export default Button;
+export default ButtonWrapper;
