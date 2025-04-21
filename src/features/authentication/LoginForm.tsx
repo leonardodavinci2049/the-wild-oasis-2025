@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Form from "../../styled_components/Form";
-import FormRowVertical from "../../styled_components/FormRowVertical";
-import Input from "../../styled_components/Input";
-import Button from "../../styled_components/Button";
-import SpinnerMini from "../../styled_components/SpinnerMini";
+import Form from "../../components/Form";
+import FormRowVertical from "../../components/FormRowVertical";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import SpinnerMini from "../../components/SpinnerMini";
 import { useLogin } from "./hooks/useLogin";
 
 function LoginForm() {
@@ -50,7 +50,7 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button size="large" disabled={isPending}>
+        <Button size="large" variation="primary" disabled={isPending}>
           {!isPending ? "Log in" : <SpinnerMini />}
         </Button>
       </FormRowVertical>

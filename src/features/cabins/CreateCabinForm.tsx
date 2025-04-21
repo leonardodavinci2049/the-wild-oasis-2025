@@ -1,18 +1,18 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import Form from "../../styled_components/Form";
-import FormRow from "../../styled_components/FormRow";
-import Input from "../../styled_components/Input";
-import Textarea from "../../styled_components/Textarea";
-import FileInput from "../../styled_components/FileInput";
-import Button from "../../styled_components/Button";
+import Form from "../../components/Form";
+import FormRow from "../../components/FormRow";
+import Input from "../../components/Input";
+import Textarea from "../../components/Textarea";
+import FileInput from "../../components/FileInput";
+import Button from "../../components/Button";
 
 import { useCreateCabin } from "./hooks/useCreateCabin";
 import { useEditCabin } from "./hooks/useEditCabin";
 
-import { CabinType } from "../../types/CabinsType";
-import { CabinFormData } from "../../types/CabinFornData";
+import { CabinType } from "../../types/cabin/CabinsType";
+import { CabinFormData } from "../../types/cabin/CabinFornData";
 
 // Interface para os dados do formulário
 
@@ -173,17 +173,19 @@ function CreateCabinForm({
       </FormRow>
 
       <FormRow>
-        {/* type is an HTML attribute! */}
-        <Button
-          variation="secondary"
-          type="reset"
-          onClick={() => onCloseModal?.()}
-        >
-          Cancel
-        </Button>
-        <Button disabled={isWorking}>
-          {isEditSession ? "Edit cabin" : "Create new cabin"}
-        </Button>
+        <>
+          <Button
+            size="medium" // Add the required size property
+            variation="secondary"
+            type="reset"
+            onClick={() => onCloseModal?.()}
+          >
+            Cancel
+          </Button>
+          <Button size="medium" variation="primary" disabled={isWorking}>
+            {isEditSession ? "Edit cabin" : "Create new cabin"}
+          </Button>
+        </>
       </FormRow>
     </Form>
   );

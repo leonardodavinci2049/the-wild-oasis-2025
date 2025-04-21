@@ -1,5 +1,5 @@
-import Row from "../styled_components/Row";
-import Heading from "../styled_components/Heading";
+import Row from "../components/Row";
+import Heading from "../components/Heading";
 import CabinTable from "../features/cabins/CabinTable";
 import AddCabin from "../features/cabins/AddCabin";
 import CabinTableOperations from "../features/cabins/CabinTableOperations";

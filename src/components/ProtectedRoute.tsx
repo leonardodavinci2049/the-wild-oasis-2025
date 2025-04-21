@@ -1,8 +1,9 @@
+import { ReactNode, useEffect } from "react";
 import styled from "styled-components";
-import { useUser } from "../features/authentication/useUser";
-import Spinner from "./Spinner";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+
+import { useUser } from "../features/authentication/hooks/useUser";
+import Spinner from "./Spinner";
 
 const FullPage = styled.div`
   height: 100vh;
@@ -12,7 +13,8 @@ const FullPage = styled.div`
   justify-content: center;
 `;
 
-function ProtectedRoute({ children }) {
+
+function ProtectedRoute({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
 
   // 1. Load the authenticated user

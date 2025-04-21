@@ -1,4 +1,4 @@
-import { CabinFormData } from "../types/CabinFornData";
+import { CabinFormData } from "../types/cabin/CabinFornData";
 import supabase, { supabaseUrl } from "./supabase";
 import { PostgrestError } from "@supabase/supabase-js";
 
@@ -17,19 +17,18 @@ export async function createEditCabin(
   newCabin: CabinFormData,
   id: number | null
 ) {
-// console.log("newCabin - xxxx", newCabin);
+  // console.log("newCabin - xxxx", newCabin);
   const hasImagePath =
     typeof newCabin.image === "string" &&
     newCabin.image.startsWith(supabaseUrl);
 
-    const imageName = `${Date.now()}-${Math.floor(Math.random() * 10000)}-${
-      newCabin.image instanceof FileList 
-        ? newCabin.image[0].name 
-        : newCabin.image instanceof File 
-          ? newCabin.image.name 
-          : ""
-    }`.replaceAll("/", "");
-
+  const imageName = `${Date.now()}-${Math.floor(Math.random() * 10000)}-${
+    newCabin.image instanceof FileList
+      ? newCabin.image[0].name
+      : newCabin.image instanceof File
+      ? newCabin.image.name
+      : ""
+  }`.replaceAll("/", "");
 
   console.log("imageName", imageName);
 
@@ -43,7 +42,7 @@ export async function createEditCabin(
 
   // A) CREATE
   if (!id) {
-   // console.log("CREATE: ", newCabin);
+    // console.log("CREATE: ", newCabin);
     const result = await supabase
       .from("cabins")
       .insert([{ ...newCabin, image: imagePath }])
@@ -74,25 +73,25 @@ export async function createEditCabin(
   // 2. Upload image
   if (hasImagePath) return data;
 
-// Verificar se newCabin.image é um arquivo válido antes de fazer upload
+  // Verificar se newCabin.image é um arquivo válido antes de fazer upload
   if (newCabin.image instanceof File) {
-  const { error: storageError } = await supabase.storage
-    .from("cabin-images")
-    .upload(imageName, newCabin.image);
+    const { error: storageError } = await supabase.storage
+      .from("cabin-images")
+      .upload(imageName, newCabin.image);
 
-  // 3.ete the cabin IF there was an error uplaoding image
-  if (storageError) {
-    await supabase.from("cabins").delete().eq("id", data.id);
-    console.error(storageError);
-    throw new Error(
-      "Cabin image could not be uploaded and the cabin was not created"
-    );
-  }
-} else if (newCabin.image instanceof FileList && newCabin.image.length > 0) {
+    // 3.ete the cabin IF there was an error uplaoding image
+    if (storageError) {
+      await supabase.from("cabins").delete().eq("id", data.id);
+      console.error(storageError);
+      throw new Error(
+        "Cabin image could not be uploaded and the cabin was not created"
+      );
+    }
+  } else if (newCabin.image instanceof FileList && newCabin.image.length > 0) {
     const { error: storageError } = await supabase.storage
       .from("cabin-images")
       .upload(imageName, newCabin.image[0]);
-    
+
     // 3. Delete the cabi there was an error uplaoding image
     if (storageError) {
       await supabase.from("cabins").delete().eq("id", data.id);

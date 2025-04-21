@@ -1,6 +1,6 @@
-import Filter from "../../styled_components/Filter";
-import SortBy from "../../styled_components/SortBy";
-import TableOperations from "../../styled_components/TableOperations";
+import Filter from "../../components/Filter";
+import SortBy from "../../components/SortBy";
+import TableOperations from "../../components/TableOperations";
 
 function BookingTableOperations() {
   return (

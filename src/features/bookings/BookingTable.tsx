@@ -1,11 +1,12 @@
 // import styled from 'styled-components';
-import Spinner from "../../styled_components/Spinner";
-import Table from "../../styled_components/Table";
-import Menus from "../../styled_components/Menus";
-import Pagination from "../../styled_components/Pagination";
-import Empty from "../../styled_components/Empty";
+import Spinner from "../../components/Spinner";
+import Table from "../../components/Table";
+import Menus from "../../components/Menus";
+import Pagination from "../../components/Pagination";
+import Empty from "../../components/Empty";
 import BookingRow from "./BookingRow";
 import { useBookings } from "./hooks/useBookings";
+
 // v2
 // Right now this is not really reusable... But we will want to use a similar table for guests as well, but with different columns. ALSO, right now we are defining these columns in BOTH the TableHeader and the BookingRow, which is not good at all. Instead, it would be much better to simply pass the columns into the Table, and the table would give access to the columns to both the header and row. So how can we do that? Well we can again use a compound component! We don't HAVE to do it like this, there's a million ways to implement a table, also without CSS Grid, but this is what I chose
 
@@ -32,7 +33,7 @@ function BookingTable() {
 
   if (isLoading) return <Spinner />;
 
-  if (!bookings.length) return <Empty resourceName="bookings" />;
+  if (!bookings?.length) return <Empty resourceName="bookings" />;
 
   return (
     <Menus>
@@ -53,7 +54,6 @@ function BookingTable() {
           )}
         />
 
-        
         <Table.Footer>
           <Pagination count={count} />
         </Table.Footer>

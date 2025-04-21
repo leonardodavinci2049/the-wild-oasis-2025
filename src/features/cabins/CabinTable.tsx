@@ -1,11 +1,11 @@
 import { useCabins } from "./hooks/useCabins";
 
 import CabinRow from "./CabinRow";
-import Spinner from "../../styled_components/Spinner";
-import Menus from "../../styled_components/Menus";
-import Table from "../../styled_components/Table";
+import Spinner from "../../components/Spinner";
+import Menus from "../../components/Menus";
+import Table from "../../components/Table";
 import { useSearchParams } from "react-router-dom";
-import Empty from "../../styled_components/Empty";
+import Empty from "../../components/Empty";
 
 /* const TableHeader = styled.header`
   display: grid;
@@ -23,7 +23,7 @@ import Empty from "../../styled_components/Empty";
 `; */
 
 function CabinTable() {
- const { isLoading, cabins } = useCabins();
+  const { isLoading, cabins } = useCabins();
   const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;

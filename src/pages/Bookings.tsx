@@ -1,10 +1,10 @@
 import BookingTable from "../features/bookings/BookingTable";
 import BookingTableOperations from "../features/bookings/BookingTableOperations";
-import Heading from "../styled_components/Heading";
-import Row from "../styled_components/Row";
+import Heading from "../components/Heading";
+import Row from "../components/Row";
 
 function Bookings() {
-return (
+  return (
     <>
       <Row type="horizontal">
         <Heading as="h1">All bookings</Heading>
