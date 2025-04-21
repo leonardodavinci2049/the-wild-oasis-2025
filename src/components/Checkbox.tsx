@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import styled from "styled-components";
 
 const StyledCheckbox = styled.div`
@@ -25,7 +26,6 @@ const StyledCheckbox = styled.div`
   }
 `;
 
-import { ChangeEvent } from "react";
 
 type CheckboxProps = {
   checked: boolean;

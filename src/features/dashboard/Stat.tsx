@@ -1,9 +1,6 @@
-import styled from 'styled-components';
-import { box } from 'styles/styles';
+import styled from "styled-components";
 
 const StyledStat = styled.div`
-  ${box}
-
   padding: 1.6rem;
   display: grid;
   grid-template-columns: 6.4rem 1fr;
@@ -46,7 +43,14 @@ const Value = styled.p`
   /* color: var(--color-grey-600); */
 `;
 
-function Stat({ icon, title, value, color }) {
+interface StatProps {
+  icon: React.ReactNode;
+  title: string;
+  value: string | number;
+  color: string;
+}
+
+function Stat({ icon, title, value, color }: StatProps) {
   return (
     <StyledStat>
       <Icon color={color}>{icon}</Icon>

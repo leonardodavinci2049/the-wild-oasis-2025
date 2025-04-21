@@ -1,5 +1,5 @@
-import Heading from "../styled_components/Heading";
-import Row from "../styled_components/Row";
+import Heading from "../components/Heading";
+import Row from "../components/Row";
 
 function Dashboard() {
   return (

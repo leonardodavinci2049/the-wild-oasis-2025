@@ -12,7 +12,7 @@ const StyledFilter = styled.div`
 `;
 
 interface FilterButtonProps {
-  active?: boolean;
+  $active?: boolean;
 }
 
 const FilterButton = styled.button<FilterButtonProps>`
@@ -20,7 +20,7 @@ const FilterButton = styled.button<FilterButtonProps>`
   border: none;
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     css`
       background-color: var(--color-brand-600);
       color: var(--color-brand-50);
@@ -39,17 +39,20 @@ const FilterButton = styled.button<FilterButtonProps>`
   }
 `;
 
+interface FilterOption {
+  value: string;
+  label: string;
+}
+
 interface FilterProps {
   filterField: string;
-  options: {
-    label: string;
-    value: string;
-  }[];
+  options: FilterOption[];
 }
 
 function Filter({ filterField, options }: FilterProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(filterField) || options.at(0)?.value || "";
+  const currentFilter =
+    searchParams.get(filterField) || options.at(0)?.value || "";
 
   function handleClick(value: string) {
     searchParams.set(filterField, value);
@@ -57,13 +60,14 @@ function Filter({ filterField, options }: FilterProps) {
 
     setSearchParams(searchParams);
   }
+
   return (
     <StyledFilter>
       {options.map((option) => (
         <FilterButton
           key={option.value}
           onClick={() => handleClick(option.value)}
-          active={option.value === currentFilter}
+          $active={option.value === currentFilter}
           disabled={option.value === currentFilter}
         >
           {option.label}

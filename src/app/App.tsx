@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import GlobalStyles from "../GlobalStyles";
 
@@ -13,8 +15,6 @@ import Account from "../pages/Account";
 import Login from "../pages/Login";
 import PageNotFound from "../pages/PageNotFound";
 import NewUsers from "../pages/Users";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Toaster } from "react-hot-toast";
 
 
 const queryClient = new QueryClient({
