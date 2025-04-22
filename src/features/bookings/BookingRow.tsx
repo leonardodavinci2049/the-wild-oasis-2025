@@ -43,6 +43,39 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
+export type BookingStatus =
+  | "unconfirmed"
+  | "confirmed"
+  | "checked-in"
+  | "checked-out";
+
+interface Booking {
+  id: number;
+  created_at: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  numGuests: number;
+  status: BookingStatus;
+  totalPrice: number;
+  hasBreakfast: boolean;
+  isPaid: boolean;
+  observations: string | null;
+  cabinId: number;
+  guestId: number;
+  cabins: {
+    name: string;
+  };
+  guests: {
+    fullName: string;
+    email: string;
+  };
+}
+
+
+
+
+
 function BookingRow({
   booking: {
     id: bookingId,
@@ -55,18 +88,8 @@ function BookingRow({
     cabins: { name: cabinName },
   },
 }: {
-  booking: {
-    id: string;
-    created_at: string;
-    startDate: string;
-    endDate: string;
-    numNights: number;
-    numGuests: number;
-    totalPrice: number;
-    status: "unconfirmed" | "checked-in" | "checked-out";
-    guests: { fullName: string; email: string };
-    cabins: { name: string };
-  };
+  booking: Booking;
+
 }) {
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
@@ -74,6 +97,7 @@ function BookingRow({
 
   const statusToTagName = {
     unconfirmed: "blue",
+    confirmed: "yellow",
     "checked-in": "green",
     "checked-out": "silver",
   };
@@ -106,8 +130,8 @@ function BookingRow({
 
       <Modal>
         <Menus.Menu>
-          <Menus.Toggle id={bookingId} />
-          <Menus.List id={bookingId}>
+          <Menus.Toggle id={String(bookingId)} />
+          <Menus.List id={String(bookingId)}>
             <Menus.Button
               icon={<HiEye />}
               onClick={() => navigate(`/bookings/${bookingId}`)}

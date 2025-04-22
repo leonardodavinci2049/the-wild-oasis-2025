@@ -1,22 +1,24 @@
 import Heading from "../components/Heading";
 import Row from "../components/Row";
+import UpdateUserDataForm from "../features/authentication/UpdateUserDataForm";
+import UpdatePasswordForm from "../features/authentication/UpdatePasswordForm";
 
-const Account = () => {
+function Account() {
   return (
     <>
       <Heading as="h1">Update your account</Heading>
 
       <Row>
         <Heading as="h3">Update user data</Heading>
-        <p>Update user data form</p>
+        <UpdateUserDataForm />
       </Row>
 
       <Row>
         <Heading as="h3">Update password</Heading>
-        <p>Update user password form</p>
+        <UpdatePasswordForm />
       </Row>
     </>
   );
-};
+}
 
 export default Account;

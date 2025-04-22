@@ -52,15 +52,13 @@ type FormRowProps = {
   error?: string;
 
   children: React.ReactElement<{ id?: string }>;
-  orientation?: "vertical" | "horizontal";
+
 };
 
-const FormRow = ({ label, error, children, orientation }: FormRowProps) => {
+const FormRow = ({ label, error, children}: FormRowProps) => {
   return (
-    <StyledFormRow orientation={orientation}>
-      {label && React.isValidElement(children) && (
-        <Label htmlFor={children.props.id}>{label}</Label>
-      )}
+    <StyledFormRow>
+      {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>
