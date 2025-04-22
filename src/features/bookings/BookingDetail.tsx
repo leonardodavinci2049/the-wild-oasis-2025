@@ -16,7 +16,7 @@ import { HiArrowUpOnSquare } from "react-icons/hi2";
 import ConfirmDelete from "../../components/ConfirmDelete";
 import Spinner from "../../components/Spinner";
 import Empty from "../../components/Empty";
-import { Modal } from "../../components/Modal";
+import Modal from "../../components/Modal";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -25,27 +25,27 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const { booking, isLoading } = useBooking();
+ const { booking, isLoading } = useBooking();
   const { checkout, isCheckingOut } = useCheckout();
   const { deleteBooking, isDeleting } = useDeleteBooking();
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
-  const statusToTagName: Record<string, string> = {
-    unconfirmed: "warning",
-    "checked-in": "success",
-    "checked-out": "info",
-  };
-
   if (isLoading) return <Spinner />;
   if (!booking) return <Empty resourceName="booking" />;
 
-  const { status, id } = booking as {
-    status: keyof typeof statusToTagName;
-    id: number;
+  const { status, id: bookingId } = booking;
+
+  const statusToTagName = {
+    unconfirmed: "blue",
+    confirmed: "yellow",
+    "checked-in": "green",
+    "checked-out": "silver",
   };
-  const bookingId = String(id);
+
+  // Garante que status está definido antes de renderizar o restante
+  if (!status) return <Empty resourceName="booking status" />;
 
   return (
     <>
@@ -57,35 +57,27 @@ function BookingDetail() {
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
-      {<BookingDataBox booking={booking} />}
+      <BookingDataBox booking={booking} />
 
       <ButtonGroup>
         {status === "unconfirmed" && (
-          <Button
-            onClick={() => navigate(`/checkin/${bookingId}`)}
-            size="medium"
-            variation="primary"
-          >
+          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
             Check in
           </Button>
         )}
 
         {status === "checked-in" && (
           <Button
-            onClick={() => checkout(Number(bookingId))}
+            onClick={() => checkout(bookingId)}
             disabled={isCheckingOut}
-            size="medium"
-            variation="primary"
           >
             <HiArrowUpOnSquare /> Check out
           </Button>
         )}
 
         <Modal>
-          <Modal.Open openWindowName="delete">
-            <Button variation="danger" size="medium">
-              Delete booking
-            </Button>
+          <Modal.Open opens="delete">
+            <Button variation="danger">Delete booking</Button>
           </Modal.Open>
 
           <Modal.Window name="delete">
@@ -93,21 +85,20 @@ function BookingDetail() {
               resourceName="booking"
               disabled={isDeleting}
               onConfirm={() =>
-                deleteBooking(Number(bookingId), {
+                deleteBooking(bookingId, {
                   onSettled: () => navigate(-1),
                 })
               }
-              onCloseModal={() => navigate(-1)}
+              onCloseModal={() => {}}
             />
           </Modal.Window>
         </Modal>
 
-        <Button variation="secondary" size="medium" onClick={moveBack}>
+        <Button variation="secondary" onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>
     </>
   );
 }
-
 export default BookingDetail;

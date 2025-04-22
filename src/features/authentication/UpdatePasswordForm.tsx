@@ -70,17 +70,19 @@ function UpdatePasswordForm() {
         />
       </FormRow>
       <FormRow>
-        <Button
-          onClick={handleReset}
-          type="reset"
-          variation="secondary"
-          size="medium"
-        >
-          Cancel
-        </Button>
-        <Button disabled={isUpdating} size="medium" variation="primary">
-          Update password
-        </Button>
+        <>
+          <Button
+            onClick={handleReset}
+            type="reset"
+            variation="secondary"
+            size="medium"
+          >
+            Cancel
+          </Button>
+          <Button disabled={isUpdating} size="medium" variation="primary">
+            Update password
+          </Button>
+        </>
       </FormRow>
     </Form>
   );

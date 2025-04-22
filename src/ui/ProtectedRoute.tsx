@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { useUser } from "../features/authentication/hooks/useUser";
-import Spinner from "./Spinner";
+import Spinner from "../components/Spinner";
 
 const FullPage = styled.div`
   height: 100vh;
