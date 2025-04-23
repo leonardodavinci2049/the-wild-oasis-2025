@@ -7,7 +7,7 @@ function Dashboard() {
   return (
     <>
       <Row type="horizontal">
-        <Heading as="h1">Dashboard</Heading>
+        <Heading as="h1">Project Status Dashboard</Heading>
         <DashboardFilter />
       </Row>
 
