@@ -68,7 +68,6 @@ const startDataLight = [
     duration: "2 nights",
     value: 0,
     color: "#f97316",
-  
   },
   {
     duration: "3 nights",
@@ -151,7 +150,10 @@ function prepareData(
 ) {
   // A bit ugly code, but sometimes this is what it takes when working with real data 😅
 
-  function incArrayValue(arr: { duration: string; value: number; color: string }[], field: string) {
+  function incArrayValue(
+    arr: { duration: string; value: number; color: string }[],
+    field: string
+  ) {
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
     );
