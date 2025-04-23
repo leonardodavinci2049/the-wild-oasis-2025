@@ -1,54 +1,78 @@
-# React + TypeScript + Vite
+# The Wild Oasis 2025
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de administração para hospedagem de cabanas na floresta, desenvolvido em **React** com **TypeScript**.
 
-Currently, two official plugins are available:
+## ✨ Objetivo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O projeto tem como objetivo fornecer uma plataforma completa para gerenciamento de hospedagens em cabanas, permitindo o cadastro e administração de cabanas, usuários, reservas e visualização de dados em dashboards interativos. O acesso ao sistema é restrito por meio de um formulário de login.
 
-## Expanding the ESLint configuration
+## 🚀 Tecnologias
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Router](https://reactrouter.com/)
+- [Styled Components](https://styled-components.com/) (ou outra lib de estilização, se aplicável)
+- [Axios](https://axios-http.com/) (ou outra lib de requisições HTTP)
+- Outras dependências modernas do ecossistema React
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## ⚙️ Funcionalidades
+
+- Cadastro, edição e exclusão de cabanas
+- Gerenciamento de usuários e permissões
+- Dashboard com indicadores e gráficos de reservas, ocupação e receitas
+- Autenticação de usuários via formulário de login
+- Interface intuitiva e responsiva
+
+## 🖥️ Como rodar o projeto
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/the-wild-oasis-2025.git
+   cd the-wild-oasis-2025
+   ```
+
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
+
+3. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm start
+   # ou
+   yarn start
+   ```
+
+4. **Acesse no navegador:**
+   ```
+   http://localhost:3000
+   ```
+
+## 📁 Estrutura do Projeto
+
+```
+the-wild-oasis-2025/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   ├── hooks/
+│   └── ...
+├── package.json
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📝 Contribuição
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
+
+---
+
+> Projeto desenvolvido para administração de hospedagens em cabanas na floresta, com foco em usabilidade, segurança e performance.
