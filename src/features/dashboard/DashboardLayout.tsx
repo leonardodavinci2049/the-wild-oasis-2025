@@ -22,9 +22,9 @@ We need to distinguish between two types of data here:
 */
 
 function DashboardLayout() {
-  const { isLoading: isLoading1, bookings, numDays } = useRecentBookings();
-  const { isLoading: isLoading2, confirmedStays } = useRecentStays();
-  const { isLoading: isLoading3, cabins = [] } = useCabins();
+  const { bookings, isLoading: isLoading1 } = useRecentBookings();
+  const { confirmedStays, isLoading: isLoading2, numDays } = useRecentStays();
+  const { cabins, isLoading: isLoading3 } = useCabins();
 
   if (isLoading1 || isLoading2 || isLoading3) return <Spinner />;
 
@@ -32,19 +32,21 @@ function DashboardLayout() {
     <StyledDashboardLayout>
       <Stats
         bookings={bookings || []}
-        confirmedStays={confirmedStays || []}
-        numDays={numDays}
-        cabinCount={cabins.length}
-      />
-      <TodayActivity />
-      <DurationChart confirmedStays={confirmedStays || []} />
-      <SalesChart
-        bookings={(bookings || []).map((booking, index) => ({
-          ...booking,
-          id: index, // Assign a unique id if not available
+        confirmedStays={(confirmedStays || []).map((stay) => ({
+          ...stay,
+          numNights: stay.numNights || 0,
         }))}
         numDays={numDays}
+        cabinCount={cabins?.length || 0}
       />
+      <TodayActivity />
+      <DurationChart
+        confirmedStays={(confirmedStays || []).map((stay) => ({
+          ...stay,
+          numNights: stay.numNights || 0,
+        }))}
+      />
+      <SalesChart bookings={bookings || []} numDays={numDays} />
     </StyledDashboardLayout>
   );
 }
