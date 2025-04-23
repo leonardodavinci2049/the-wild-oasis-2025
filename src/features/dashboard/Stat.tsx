@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
 const StyledStat = styled.div`
+  /* Box */
+  background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-100);
+  border-radius: var(--border-radius-md);
+
   padding: 1.6rem;
   display: grid;
   grid-template-columns: 6.4rem 1fr;
@@ -40,13 +45,13 @@ const Value = styled.p`
   font-size: 2.4rem;
   line-height: 1;
   font-weight: 500;
-  /* color: var(--color-grey-600); */
 `;
 
+// Define the props interface
 interface StatProps {
   icon: React.ReactNode;
   title: string;
-  value: string | number;
+  value: number | string;
   color: string;
 }
 
