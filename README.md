@@ -1,56 +1,56 @@
 # The Wild Oasis 2025
 
-Sistema de administração para hospedagem de cabanas na floresta, desenvolvido em **React** com **TypeScript**.
+Administration system for forest cabin hosting, developed in **React** with **TypeScript**.
 
-## ✨ Objetivo
+## ✨ Purpose
 
-O projeto tem como objetivo fornecer uma plataforma completa para gerenciamento de hospedagens em cabanas, permitindo o cadastro e administração de cabanas, usuários, reservas e visualização de dados em dashboards interativos. O acesso ao sistema é restrito por meio de um formulário de login.
+The project aims to provide a complete platform for managing cabin hosting, allowing the registration and administration of cabins, users, reservations, and visualization of data in interactive dashboards. Access to the system is restricted through a login form.
 
-## 🚀 Tecnologias
+## 🚀 Technologies
 
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [React Router](https://reactrouter.com/)
-- [Styled Components](https://styled-components.com/) (ou outra lib de estilização, se aplicável)
-- [Axios](https://axios-http.com/) (ou outra lib de requisições HTTP)
-- Outras dependências modernas do ecossistema React
+- [Styled Components](https://styled-components.com/) (or another styling library, if applicable)
+- [Axios](https://axios-http.com/) (or another HTTP request library)
+- Other modern dependencies from the React ecosystem
 
-## ⚙️ Funcionalidades
+## ⚙️ Features
 
-- Cadastro, edição e exclusão de cabanas
-- Gerenciamento de usuários e permissões
-- Dashboard com indicadores e gráficos de reservas, ocupação e receitas
-- Autenticação de usuários via formulário de login
-- Interface intuitiva e responsiva
+- Register, edit, and delete cabins
+- User and permission management
+- Dashboard with indicators and charts for reservations, occupancy, and revenue
+- User authentication via login form
+- Intuitive and responsive interface
 
-## 🖥️ Como rodar o projeto
+## 🖥️ How to run the project
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/seu-usuario/the-wild-oasis-2025.git
+   git clone https://github.com/your-username/the-wild-oasis-2025.git
    cd the-wild-oasis-2025
    ```
 
-2. **Instale as dependências:**
+2. **Install dependencies:**
    ```bash
    npm install
-   # ou
+   # or
    yarn install
    ```
 
-3. **Inicie o servidor de desenvolvimento:**
+3. **Start the development server:**
    ```bash
    npm start
-   # ou
+   # or
    yarn start
    ```
 
-4. **Acesse no navegador:**
+4. **Access in your browser:**
    ```
    http://localhost:3000
    ```
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 the-wild-oasis-2025/
@@ -65,14 +65,14 @@ the-wild-oasis-2025/
 └── README.md
 ```
 
-## 📝 Contribuição
+## 📝 Contribution
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
+Contributions are welcome! Feel free to open issues or pull requests.
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob a licença MIT.
+This project is licensed under the MIT License.
 
 ---
 
-> Projeto desenvolvido para administração de hospedagens em cabanas na floresta, com foco em usabilidade, segurança e performance.
+> Project developed for the administration of forest cabin hosting, focusing on usability, security, and performance.
