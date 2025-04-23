@@ -38,14 +38,11 @@ function TodayItem({ activity }: { activity: TodayActivity }) {
       <div>{numNights} nights</div>
 
       {status === "unconfirmed" && (
-        <Button
-          size="small"
-          variation="primary"
-          as={Link}
-          to={`/checkin/${id}`}
-        >
-          Check in
-        </Button>
+        <Link to={`/checkin/${id}`} style={{ textDecoration: "none" }}>
+          <Button size="small" variation="primary">
+            Check in
+          </Button>
+        </Link>
       )}
       {status === "checked-in" && <CheckoutButton bookingId={id.toString()} />}
     </StyledTodayItem>

@@ -1,8 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import {  useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
 import { useOutsideClick } from "../hooks/useOutsideClick";
+import { MenusContext } from "../context/MenusContext";
 
 const Menu = styled.div`
   display: flex;
@@ -65,17 +66,6 @@ const StyledButton = styled.button`
   }
 `;
 
-const initialContextoValue = {
-  openId: "",
-  close: () => {},
-  open: (id: string) => {},
-  position: null as { x: number; y: number } | null,
-  setPosition: (position: { x: number; y: number }) => {},
-};
-
-
-
-const MenusContext = createContext( initialContextoValue);
 
 function Menus({ children }: { children: React.ReactNode }) {
   const [openId, setOpenId] = useState("");
